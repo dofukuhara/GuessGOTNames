@@ -1,0 +1,41 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'br.com.fdtechcorp.android.guessgotnames'
+    compileSdk compile_sdk_version
+
+    defaultConfig {
+        applicationId "br.com.fdtechcorp.android.guessgotnames"
+        minSdk min_sdk_version
+        targetSdk target_sdk_version
+        versionCode app_version_code
+        versionName app_version_name
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    // Android Material Component
+    implementation "com.google.android.material:material:$android_material_version"
+
+    // JUnit
+    testImplementation "junit:junit:$junit_version"
+}
