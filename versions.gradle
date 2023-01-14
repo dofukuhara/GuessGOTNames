@@ -9,6 +9,13 @@ ext {
     // Android Material Component
     android_material_version = "1.7.0"
 
+    // DI - Koin
+    koin_android_version = "3.3.2"
+
+    // Network - Retrofit, Gson Converter, Logging Interceptor
+    retrofit_version = "2.9.0"
+    okhttp3_logging_version = "4.10.0"
+
     // Testing Dependencies
     junit_version = "4.13.2"
 }
