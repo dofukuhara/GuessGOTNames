@@ -40,7 +40,7 @@ class GotButton : MaterialButton {
     }
 
     private fun backgroundConfiguration(context: Context) {
-        backgroundTintList = ContextCompat.getColorStateList(context, R.color.got_old_burgundy)
+        backgroundTintList = ContextCompat.getColorStateList(context, R.color.got_button_background)
     }
 
     private fun textConfiguration() {

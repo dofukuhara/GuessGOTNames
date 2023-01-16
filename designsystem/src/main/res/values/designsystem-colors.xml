@@ -11,5 +11,17 @@
 
     <!--  Custom Colors  -->
     <color name="got_grey">#BEB8AF</color>
+    <color name="got_grey_alpha25">#40BEB8AF</color>
     <color name="got_old_burgundy">#423730</color>
+
+    <!--  Got Button Colors  -->
+    <color name="got_button_background">@color/got_old_burgundy</color>
+    <color name="got_button_text">@color/got_grey</color>
+
+    <!--  Got Toolbar Colors  -->
+    <color name="got_toolbar_back_icon">@color/got_grey</color>
+    <color name="got_toolbar_title">@color/got_grey</color>
+    <color name="got_toolbar_background">@color/got_old_burgundy</color>
+    <color name="got_toolbar_track">@color/got_grey</color>
+    <color name="got_toolbar_track_background">@color/got_grey_alpha25</color>
 </resources>

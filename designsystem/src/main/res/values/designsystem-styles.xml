@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-        <style name="GotButtonTextStyle">
+    <style name="GotButtonTextStyle" parent="@android:style/TextAppearance">
         <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/got_grey</item>
+        <item name="android:textColor">@color/got_button_text</item>
     </style>
 </resources>
