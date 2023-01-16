@@ -13,6 +13,7 @@
     <color name="got_grey">#BEB8AF</color>
     <color name="got_grey_alpha25">#40BEB8AF</color>
     <color name="got_old_burgundy">#423730</color>
+    <color name="got_raisin_black">#261E1D</color>
 
     <!--  Got Button Colors  -->
     <color name="got_button_background">@color/got_old_burgundy</color>
@@ -24,4 +25,8 @@
     <color name="got_toolbar_background">@color/got_old_burgundy</color>
     <color name="got_toolbar_track">@color/got_grey</color>
     <color name="got_toolbar_track_background">@color/got_grey_alpha25</color>
+
+    <!--  Got StatusBar Fragment Color  -->
+    <color name="got_statusbar_color">@color/got_raisin_black</color>
+    <color name="got_statusbar_main_menu_color">@color/black</color>
 </resources>
