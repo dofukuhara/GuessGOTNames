@@ -7,5 +7,17 @@
     <fragment
         android:id="@+id/mainMenuFragment"
         android:name="br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.mainmenu.ui.MainMenuFragment"
-        android:label="MainMenuFragment" />
+        android:label="MainMenuFragment" >
+        <action
+            android:id="@+id/action_mainMenuFragment_to_guessNameGameFragment"
+            app:destination="@id/guessNameGameFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/guessNameGameFragment"
+        android:name="br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.ui.GuessNameGameFragment"
+        android:label="GuessNameGameFragment" >
+        <argument
+            android:name="gameMode"
+            app:argType="br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.GameMode" />
+    </fragment>
 </navigation>
