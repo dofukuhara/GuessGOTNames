@@ -2,4 +2,6 @@
 <resources>
     <string name="main_menu_logo_image_desc">Main Menu logo image</string>
     <string name="gamefeature_game_description">Try matching Game Of Thrones characters to their photo</string>
+    <string name="gamefeature_practice_mode_label">Practice Mode</string>
+    <string name="gamefeature_timed_mode_label">Timed Mode</string>
 </resources>

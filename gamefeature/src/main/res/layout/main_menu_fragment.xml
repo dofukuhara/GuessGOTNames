@@ -34,7 +34,7 @@
         app:layout_constraintTop_toBottomOf="@id/main_menu_one_third_screen_guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/main_menu_practice_mode_btn"
         app:layout_constraintVertical_bias="1"
         app:layout_constraintVertical_chainStyle="packed"
         android:layout_marginStart="40dp"
@@ -42,5 +42,33 @@
         android:layout_marginBottom="24dp"
         style="@style/gamefeature_game_desc_text"
         android:text="@string/gamefeature_game_description" />
+
+    <br.com.fdtechcorp.android.guessgotnames.lib.designsystem.GotButton
+        android:id="@+id/main_menu_practice_mode_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/main_menu_game_desc"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/main_menu_timed_mode_btn"
+        app:layout_constraintVertical_bias="1"
+        android:layout_marginStart="@dimen/app_image_default_horizontal_margin"
+        android:layout_marginEnd="@dimen/app_image_default_horizontal_margin"
+        android:layout_marginBottom="8dp"
+        android:text="@string/gamefeature_practice_mode_label"/>
+
+    <br.com.fdtechcorp.android.guessgotnames.lib.designsystem.GotButton
+        android:id="@+id/main_menu_timed_mode_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/main_menu_practice_mode_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="1"
+        android:layout_marginStart="@dimen/app_image_default_horizontal_margin"
+        android:layout_marginEnd="@dimen/app_image_default_horizontal_margin"
+        android:layout_marginBottom="40dp"
+        android:text="@string/gamefeature_timed_mode_label"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
