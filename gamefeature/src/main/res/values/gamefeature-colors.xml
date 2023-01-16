@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  Main Menu Color schema  -->
+    <color name="gamefeature_background_color">@color/black</color>
+    <color name="gamefeature_logo_tint_color">@color/got_grey</color>
+    <color name="gamefeature_text_color">@color/got_grey</color>
+</resources>

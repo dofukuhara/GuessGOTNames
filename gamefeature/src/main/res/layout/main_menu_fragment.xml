@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gamefeature_background_color"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/main_menu_logo_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/main_menu_one_third_screen_guideline"
+        android:layout_marginStart="@dimen/app_image_default_horizontal_margin"
+        android:layout_marginEnd="@dimen/app_image_default_horizontal_margin"
+        android:src="@drawable/gameofthrones_logo"
+        app:tint="@color/gamefeature_logo_tint_color"
+        android:contentDescription="@string/main_menu_logo_image_desc" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/main_menu_one_third_screen_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.35"
+        android:orientation="horizontal" />
+
+    <TextView
+        android:id="@+id/main_menu_game_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/main_menu_one_third_screen_guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="24dp"
+        style="@style/gamefeature_game_desc_text"
+        android:text="@string/gamefeature_game_description" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

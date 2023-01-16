@@ -15,3 +15,5 @@ dependencyResolutionManagement {
 rootProject.name = "Guess GOT Names"
 include ':app'
 include ':network'
+include ':gamefeature'
+include ':designsystem'

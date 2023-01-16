@@ -6,8 +6,10 @@ ext {
     app_version_code = 1
     app_version_name = "1.0.0"
 
-    // Android Material Component
+    // Android View Component
     android_material_version = "1.7.0"
+    constraint_layout_version = "2.1.4"
+    fragment_ktx_version = "1.5.5"
 
     // DI - Koin
     koin_android_version = "3.3.2"
@@ -15,6 +17,10 @@ ext {
     // Network - Retrofit, Gson Converter, Logging Interceptor
     retrofit_version = "2.9.0"
     okhttp3_logging_version = "4.10.0"
+    gson_version = "2.10"
+
+    // Navigation Component
+    nav_component_version = "2.5.3"
 
     // Testing Dependencies
     junit_version = "4.13.2"

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/game_feature_nav_graph"
+    app:startDestination="@id/mainMenuFragment">
+
+    <fragment
+        android:id="@+id/mainMenuFragment"
+        android:name="br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.mainmenu.ui.MainMenuFragment"
+        android:label="MainMenuFragment" />
+</navigation>

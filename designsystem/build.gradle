@@ -1,20 +1,18 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
 }
 
 android {
-    namespace 'br.com.fdtechcorp.android.guessgotnames'
+    namespace 'br.com.fdtechcorp.android.guessgotnames.lib.designsystem'
     compileSdk compile_sdk_version
 
     defaultConfig {
-        applicationId "br.com.fdtechcorp.android.guessgotnames"
         minSdk min_sdk_version
         targetSdk target_sdk_version
-        versionCode app_version_code
-        versionName app_version_name
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -33,18 +31,6 @@ android {
 }
 
 dependencies {
-    // Custom Guess GOT Names modules
-    implementation project(":designsystem")
-    implementation project(":gamefeature")
-    implementation project(":network")
-
-    // View Components
-    implementation "androidx.fragment:fragment-ktx:$fragment_ktx_version"
+    // Material Component
     implementation "com.google.android.material:material:$android_material_version"
-
-    // DI - Koin
-    implementation "io.insert-koin:koin-android:$koin_android_version"
-
-    // JUnit
-    testImplementation "junit:junit:$junit_version"
 }
