@@ -22,6 +22,9 @@ ext {
     // Navigation Component
     nav_component_version = "2.5.3"
 
+    // Image Loader - Picasso
+    picasso_version = "2.8"
+
     // Testing Dependencies
     junit_version = "4.13.2"
 }

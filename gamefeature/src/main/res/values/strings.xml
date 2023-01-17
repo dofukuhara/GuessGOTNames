@@ -5,4 +5,5 @@
     <string name="gamefeature_practice_mode_label">Practice Mode</string>
     <string name="gamefeature_timed_mode_label">Timed Mode</string>
     <string name="gamefeature_something_went_wrong_message">Something went wrong:(\nPlease try again later.</string>
+    <string name="card_image_content_desc">Image of the character</string>
 </resources>

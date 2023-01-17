@@ -1,7 +1,6 @@
 package br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.R
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.databinding.GuessNameGameFragmentBinding
+import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.adapter.CharacterClickListener
+import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.adapter.CharacterListAdapter
+import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.CharacterModel
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.GameState
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.viewmodel.GuessNameViewModel
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.module.gameFeatureModule
@@ -23,6 +25,12 @@ class GuessNameGameFragment : Fragment(R.layout.guess_name_game_fragment) {
 
     private val navArgs: GuessNameGameFragmentArgs by navArgs()
     private val viewModel: GuessNameViewModel by viewModel()
+
+    private val onCharClickListener = object : CharacterClickListener {
+        override fun onClick(character: CharacterModel) {
+            viewModel.userGuess(character)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -98,9 +106,8 @@ class GuessNameGameFragment : Fragment(R.layout.guess_name_game_fragment) {
 
     private fun setupListOfCharsObserver() {
         viewModel.gameList.observe(viewLifecycleOwner) { listOfChars ->
-            listOfChars.forEachIndexed { index, item ->
-                Log.v("FUKUHARALOG", "[$index] - $item")
-            }
+            val adapter = CharacterListAdapter(listOfChars, onCharClickListener)
+            binding.guessNameGridRv.adapter = adapter
         }
     }
 }

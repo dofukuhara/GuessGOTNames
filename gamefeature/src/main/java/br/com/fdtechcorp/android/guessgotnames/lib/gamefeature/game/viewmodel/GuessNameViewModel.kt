@@ -39,6 +39,10 @@ class GuessNameViewModel(
         }
     }
 
+    fun userGuess(character: CharacterModel) {
+
+    }
+
     private fun isFirstRun() = _listOfCharacters.value == null
 
     private fun gameSetup(gameMode: GameMode) {
