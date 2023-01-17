@@ -4,4 +4,10 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/got_button_text</item>
     </style>
+
+    <style name="ErrorMessageTextStyle">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/got_grey</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
 </resources>
