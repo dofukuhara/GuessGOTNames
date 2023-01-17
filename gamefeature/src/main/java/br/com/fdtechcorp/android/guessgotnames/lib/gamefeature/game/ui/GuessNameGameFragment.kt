@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -25,6 +26,8 @@ class GuessNameGameFragment : Fragment(R.layout.guess_name_game_fragment) {
 
     private val navArgs: GuessNameGameFragmentArgs by navArgs()
     private val viewModel: GuessNameViewModel by viewModel()
+
+    private var adapter: CharacterListAdapter? = null
 
     private val onCharClickListener = object : CharacterClickListener {
         override fun onClick(character: CharacterModel) {
@@ -82,8 +85,8 @@ class GuessNameGameFragment : Fragment(R.layout.guess_name_game_fragment) {
                 GameState.DATAFETCH -> Unit
                 GameState.FAILURE   -> makeErrorContainerVisible()
                 GameState.STARTED   -> makeGameContentVisible()
-                GameState.WON       -> TODO()
-                is GameState.LOOSE  -> TODO()
+                GameState.WON       -> Unit
+                is GameState.LOOSE  -> displayAlert(gameState.score)
             }
         }
     }
@@ -106,8 +109,27 @@ class GuessNameGameFragment : Fragment(R.layout.guess_name_game_fragment) {
 
     private fun setupListOfCharsObserver() {
         viewModel.gameList.observe(viewLifecycleOwner) { listOfChars ->
-            val adapter = CharacterListAdapter(listOfChars, onCharClickListener)
-            binding.guessNameGridRv.adapter = adapter
+            if (adapter == null) {
+                adapter = CharacterListAdapter(listOfChars, onCharClickListener)
+                binding.guessNameGridRv.adapter = adapter
+            } else {
+                adapter?.updateDataset(listOfChars)
+            }
+        }
+    }
+
+    private fun displayAlert(score: Int) {
+        context?.let { ctx ->
+            AlertDialog.Builder(ctx)
+                .setTitle("Game Over!")
+                .setMessage("You scored $score.")
+                .setPositiveButton("OK") { _, _ ->
+                    findNavController().navigateUp()
+                }
+                .setCancelable(false)
+                .show()
+        } ?: run {
+            findNavController().navigateUp()
         }
     }
 }

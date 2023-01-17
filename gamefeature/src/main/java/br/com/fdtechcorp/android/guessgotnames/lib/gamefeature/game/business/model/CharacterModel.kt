@@ -4,7 +4,7 @@ data class CharacterModel(
     val firstName: String,
     val lastName: String,
     val imageUrl: String,
-    val guessState: GuessState = GuessState.NOT_SET
+    var guessState: GuessState = GuessState.NOT_SET
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

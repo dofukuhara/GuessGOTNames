@@ -3,10 +3,13 @@ package br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import br.com.fdtechcorp.android.guessgotnames.lib.designsystem.util.UnitConverter
+import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.R
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.databinding.CharacterCardBinding
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.CharacterModel
+import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.GuessState
 import com.squareup.picasso.Picasso
 
 class CharacterListAdapter(
@@ -26,6 +29,11 @@ class CharacterListAdapter(
     }
 
     override fun getItemCount(): Int = dataset.size
+
+    fun updateDataset(newDataset: List<CharacterModel>) {
+        dataset = newDataset
+        notifyDataSetChanged()
+    }
 
     private fun calculateCardSize(view: View): Int {
         val paddingOfTwoInPx = UnitConverter.dpToPixel(view.context, DEFAULT_PADDING_VALUE_IN_DP)
@@ -52,6 +60,13 @@ class CharacterListAdapter(
                 .load(characterModel.imageUrl)
                 .resize(cardSize, cardSize)
                 .into(binding.characterCardImg)
+
+
+            when (characterModel.guessState) {
+                GuessState.NOT_SET -> binding.characterCardImg.foreground = null
+                GuessState.RIGHT -> binding.characterCardImg.foreground = ContextCompat.getDrawable(binding.root.context, R.drawable.right_guess_overlay)
+                GuessState.WRONG -> binding.characterCardImg.foreground = ContextCompat.getDrawable(binding.root.context, R.drawable.wrong_guess_overlay)
+            }
 
             binding.characterCardImg.setOnClickListener {
                 clickListener.onClick(characterModel)

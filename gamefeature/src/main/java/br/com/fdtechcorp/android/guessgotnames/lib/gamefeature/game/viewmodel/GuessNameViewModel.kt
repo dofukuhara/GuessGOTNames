@@ -8,8 +8,10 @@ import br.com.fdtechcorp.android.guessgotnames.lib.common.arch.Either
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.CharacterModel
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.GameMode
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.GameState
+import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.GuessState
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.repository.CharactersRepository
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -33,27 +35,72 @@ class GuessNameViewModel(
     private val _characterNameToBeGuessed = MutableLiveData<String>()
     val characterNameToBeGuessed: LiveData<String> = _characterNameToBeGuessed
 
+    private val _shouldBlockClick = MutableLiveData<Boolean>(false)
+
+    private val _scoreCount = MutableLiveData<Int>(0)
+
+    private val _gameMode = MutableLiveData<GameMode>()
+
     fun initGame(gameMode: GameMode) {
         if (isFirstRun()) {
             gameSetup(gameMode)
         }
     }
 
-    fun userGuess(character: CharacterModel) {
-
-    }
-
     private fun isFirstRun() = _listOfCharacters.value == null
 
     private fun gameSetup(gameMode: GameMode) {
         _gameState.value = GameState.SETUP
+        _gameMode.value = gameMode
         _toolbarConfig.value = Pair(gameMode.titleStringResId, gameMode == GameMode.TIMED_MODE)
 
         fetchCharactersList()
     }
 
+    fun userGuess(selectedCharacter: CharacterModel) {
+        if (_shouldBlockClick.value == true) {
+            return
+        }
+
+        val listOfChars = _gameList.value ?: listOf()
+        val charToBeGuessed = _characterToBeGuessed.value
+        val charSelected = listOfChars.find { it == selectedCharacter }
+
+        if (charSelected == charToBeGuessed) {
+            charSelected?.guessState = GuessState.RIGHT
+            notifyViewWithRightGuess(listOfChars)
+        } else {
+            charSelected?.guessState = GuessState.WRONG
+            notifyViewWithWrongGuess(listOfChars)
+        }
+    }
+
+    private fun notifyViewWithRightGuess(listOfChars: List<CharacterModel>) {
+        _gameList.value = listOfChars
+        viewModelScope.launch {
+            _shouldBlockClick.value = true
+            delay(2000)
+            restartGame()
+        }
+        updateUserScore()
+    }
+
+    private fun notifyViewWithWrongGuess(listOfChars: List<CharacterModel>) {
+        if (_gameMode.value == GameMode.PRACTICE_MODE) {
+            _shouldBlockClick.value = true
+            _gameState.value = GameState.LOOSE(_scoreCount.value ?: 0)
+        }
+        _gameList.value = listOfChars
+    }
+
+    private fun updateUserScore() {
+        val scoreCounter = _scoreCount.value ?: 0
+        _scoreCount.value = scoreCounter + 1
+    }
+
     private fun restartGame() {
         _gameState.value = GameState.STARTED
+        _shouldBlockClick.value = false
 
         val gameList = generateRandomListForGame()
         val profileToBeGuessed = generatedRandomProfileForGame(gameList)
@@ -96,7 +143,7 @@ class GuessNameViewModel(
         }
 
         return characterIndexesSet.map { index ->
-            charactersList[index]
+            charactersList[index].copy() // Make a copy of the Char Item, so that we don't modify the original one
         }
     }
 
