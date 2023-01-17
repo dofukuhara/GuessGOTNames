@@ -1,9 +1,11 @@
 package br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.module
 
 import br.com.fdtechcorp.android.guessgotnames.lib.common.network.ModelMapper
+import br.com.fdtechcorp.android.guessgotnames.lib.common.timer.TimerCase
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.CharacterModel
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.CharacterModelMapper
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.CharactersListVo
+import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.GameConfig
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.repository.CharactersRemoteRepository
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.repository.CharactersRepository
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.repository.CharactersServiceApi
@@ -22,7 +24,9 @@ val gameFeatureModule = module {
     // GuessName ViewModel
     viewModel { GuessNameViewModel(
         backgroundDispatcher = Dispatchers.IO,
-        repository = get()
+        repository = get(),
+        timer = TimerCase(),
+        gameConfig = GameConfig(numberOfProfiles = 6, timerForTimedModeInSeconds = 120)
     ) }
 }
 

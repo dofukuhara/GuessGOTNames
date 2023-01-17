@@ -5,19 +5,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.fdtechcorp.android.guessgotnames.lib.common.arch.Either
-import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.CharacterModel
-import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.GameMode
-import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.GameState
-import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.GuessState
+import br.com.fdtechcorp.android.guessgotnames.lib.common.timer.TimerCase
+import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.*
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.repository.CharactersRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class GuessNameViewModel(
     private val backgroundDispatcher: CoroutineDispatcher,
-    private val repository: CharactersRepository
+    private val repository: CharactersRepository,
+    private val timer: TimerCase,
+    private val gameConfig: GameConfig
 ) : ViewModel() {
 
     // UI - Toolbar Configuration
@@ -36,6 +37,10 @@ class GuessNameViewModel(
     private val _characterNameToBeGuessed = MutableLiveData<String>()
     val characterNameToBeGuessed: LiveData<String> = _characterNameToBeGuessed
 
+    // UI - Timer percentage (for Timed Mode)
+    private val _timerPercentage = MutableLiveData<Int>()
+    val timerPercentage: LiveData<Int> = _timerPercentage
+
     // ViewModel data - full list of characters retrieved from repository
     private val _listOfCharacters = MutableLiveData<List<CharacterModel>>()
 
@@ -50,6 +55,9 @@ class GuessNameViewModel(
 
     // ViewModel data - state variable to enable/disable avatar card click handling
     private val _shouldBlockClick = MutableLiveData<Boolean>(false)
+
+    // ViewModel data - handling one-time initialization of the Timer
+    private val _wasTimerInitialized = MutableLiveData<Boolean>(false)
 
     fun initGame(gameMode: GameMode) {
         if (isFirstRun()) {
@@ -118,6 +126,24 @@ class GuessNameViewModel(
         _gameList.value = gameList
         _characterToBeGuessed.value = profileToBeGuessed
         _characterNameToBeGuessed.value = "${profileToBeGuessed.firstName} ${profileToBeGuessed.lastName}"
+
+        initTimerForTimedMode()
+    }
+
+    private fun initTimerForTimedMode() {
+        if (_wasTimerInitialized.value == false && _gameMode.value == GameMode.TIMED_MODE) {
+            _wasTimerInitialized.value = true
+
+            timer.timerFlow.toggleTime(gameConfig.timerForTimedModeInSeconds, viewModelScope)
+            viewModelScope.launch {
+                timer.timerStateFlow.collect { timerState ->
+                    _timerPercentage.value = timerState.progressPercentage
+                    if (timerState.secondsRemaining == 0) {
+                        _gameState.value = GameState.LOOSE(_scoreCount.value ?: 0)
+                    }
+                }
+            }
+        }
     }
 
     private fun fetchCharactersList() {
@@ -145,7 +171,7 @@ class GuessNameViewModel(
     private fun generateRandomListForGame(): List<CharacterModel> {
         val charactersList = _listOfCharacters.value ?: listOf()
         val charactersListSize = charactersList.size
-        val minCharsToDisplay = minOf(6, charactersListSize)
+        val minCharsToDisplay = minOf(gameConfig.numberOfProfiles, charactersListSize)
 
         val characterIndexesSet = mutableSetOf<Int>()
         while (characterIndexesSet.size < minCharsToDisplay) {

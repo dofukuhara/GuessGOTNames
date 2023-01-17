@@ -66,6 +66,7 @@ class GuessNameGameFragment : Fragment(R.layout.guess_name_game_fragment) {
         setupGameStateObserver()
         setupCharNameObserver()
         setupListOfCharsObserver()
+        setupTimerProgressObserver()
     }
 
     private fun setupToolbarConfigObserver() {
@@ -115,6 +116,12 @@ class GuessNameGameFragment : Fragment(R.layout.guess_name_game_fragment) {
             } else {
                 adapter?.updateDataset(listOfChars)
             }
+        }
+    }
+
+    private fun setupTimerProgressObserver() {
+        viewModel.timerPercentage.observe(viewLifecycleOwner) { timerPercentage ->
+            binding.guessGameToolbar.updateProgressIndicator(timerPercentage)
         }
     }
 
