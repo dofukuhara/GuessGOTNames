@@ -121,9 +121,9 @@ class GuessNameGameFragment : Fragment(R.layout.guess_name_game_fragment) {
     private fun displayAlert(score: Int) {
         context?.let { ctx ->
             AlertDialog.Builder(ctx)
-                .setTitle("Game Over!")
-                .setMessage("You scored $score.")
-                .setPositiveButton("OK") { _, _ ->
+                .setTitle(R.string.gamefeature_game_over_msg_title)
+                .setMessage(ctx.getString(R.string.gamefeature_game_over_msg_body, score))
+                .setPositiveButton(R.string.gamefeature_game_over_msg_cta) { _, _ ->
                     findNavController().navigateUp()
                 }
                 .setCancelable(false)

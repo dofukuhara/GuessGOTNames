@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="main_menu_logo_image_desc">Main Menu logo image</string>
-    <string name="gamefeature_game_description">Try matching Game Of Thrones characters to their photo</string>
+    <!--  Common Strings  -->
     <string name="gamefeature_practice_mode_label">Practice Mode</string>
     <string name="gamefeature_timed_mode_label">Timed Mode</string>
+
+    <!--  Main Menu Strings  -->
+    <string name="main_menu_logo_image_desc">Main Menu logo image</string>
+    <string name="gamefeature_game_description">Try matching Game Of Thrones characters to their photo</string>
+
+    <!--  Game Strings  -->
     <string name="gamefeature_something_went_wrong_message">Something went wrong:(\nPlease try again later.</string>
+    <string name="gamefeature_game_over_msg_title">Game Over!</string>
+    <string name="gamefeature_game_over_msg_body">You scored %d.</string>
+    <string name="gamefeature_game_over_msg_cta">OK</string>
     <string name="card_image_content_desc">Image of the character</string>
 </resources>
