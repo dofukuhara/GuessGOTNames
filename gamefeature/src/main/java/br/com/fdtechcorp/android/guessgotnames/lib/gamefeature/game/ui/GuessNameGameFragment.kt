@@ -1,6 +1,7 @@
 package br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,6 +53,8 @@ class GuessNameGameFragment : Fragment(R.layout.guess_name_game_fragment) {
     private fun setupViewModelObservers() {
         setupToolbarConfigObserver()
         setupGameStateObserver()
+        setupCharNameObserver()
+        setupListOfCharsObserver()
     }
 
     private fun setupToolbarConfigObserver() {
@@ -85,5 +88,19 @@ class GuessNameGameFragment : Fragment(R.layout.guess_name_game_fragment) {
     private fun makeGameContentVisible() {
         binding.guessNameContentErrorGroup.visibility = View.GONE
         binding.guessNameContentGroup.visibility = View.VISIBLE
+    }
+
+    private fun setupCharNameObserver() {
+        viewModel.characterNameToBeGuessed.observe(viewLifecycleOwner) { charName ->
+            binding.guessNameCharName.text = charName
+        }
+    }
+
+    private fun setupListOfCharsObserver() {
+        viewModel.gameList.observe(viewLifecycleOwner) { listOfChars ->
+            listOfChars.forEachIndexed { index, item ->
+                Log.v("FUKUHARALOG", "[$index] - $item")
+            }
+        }
     }
 }

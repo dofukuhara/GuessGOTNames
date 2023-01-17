@@ -26,6 +26,13 @@ class GuessNameViewModel(
 
     private val _listOfCharacters = MutableLiveData<List<CharacterModel>>()
 
+    private val _gameList = MutableLiveData<List<CharacterModel>>()
+    val gameList: LiveData<List<CharacterModel>> = _gameList
+
+    private val _characterToBeGuessed = MutableLiveData<CharacterModel>()
+    private val _characterNameToBeGuessed = MutableLiveData<String>()
+    val characterNameToBeGuessed: LiveData<String> = _characterNameToBeGuessed
+
     fun initGame(gameMode: GameMode) {
         if (isFirstRun()) {
             gameSetup(gameMode)
@@ -43,6 +50,13 @@ class GuessNameViewModel(
 
     private fun restartGame() {
         _gameState.value = GameState.STARTED
+
+        val gameList = generateRandomListForGame()
+        val profileToBeGuessed = generatedRandomProfileForGame(gameList)
+
+        _gameList.value = gameList
+        _characterToBeGuessed.value = profileToBeGuessed
+        _characterNameToBeGuessed.value = "${profileToBeGuessed.firstName} ${profileToBeGuessed.lastName}"
     }
 
     private fun fetchCharactersList() {
@@ -65,5 +79,24 @@ class GuessNameViewModel(
                 }
             }
         }
+    }
+
+    private fun generateRandomListForGame(): List<CharacterModel> {
+        val charactersList = _listOfCharacters.value ?: listOf()
+        val charactersListSize = charactersList.size
+        val minCharsToDisplay = minOf(6, charactersListSize)
+
+        val characterIndexesSet = mutableSetOf<Int>()
+        while (characterIndexesSet.size < minCharsToDisplay) {
+            characterIndexesSet.add((0 until charactersListSize).random())
+        }
+
+        return characterIndexesSet.map { index ->
+            charactersList[index]
+        }
+    }
+
+    private fun generatedRandomProfileForGame(gameList: List<CharacterModel>): CharacterModel {
+        return gameList.random()
     }
 }
