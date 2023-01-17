@@ -20,26 +20,36 @@ class GuessNameViewModel(
     private val repository: CharactersRepository
 ) : ViewModel() {
 
+    // UI - Toolbar Configuration
     private val _toolbarConfig = MutableLiveData<Pair<Int, Boolean>>()
     val toolbarConfig: LiveData<Pair<Int, Boolean>> = _toolbarConfig
 
+    // UI - Game State Configuration
     private val _gameState = MutableLiveData<GameState>()
     val gameState: LiveData<GameState> = _gameState
 
-    private val _listOfCharacters = MutableLiveData<List<CharacterModel>>()
-
+    // UI - List of Characters to display in the grid
     private val _gameList = MutableLiveData<List<CharacterModel>>()
     val gameList: LiveData<List<CharacterModel>> = _gameList
 
-    private val _characterToBeGuessed = MutableLiveData<CharacterModel>()
+    // UI - Name (String) of the character to be guessed
     private val _characterNameToBeGuessed = MutableLiveData<String>()
     val characterNameToBeGuessed: LiveData<String> = _characterNameToBeGuessed
 
-    private val _shouldBlockClick = MutableLiveData<Boolean>(false)
+    // ViewModel data - full list of characters retrieved from repository
+    private val _listOfCharacters = MutableLiveData<List<CharacterModel>>()
 
+    // ViewModel data - Character model to be guessed
+    private val _characterToBeGuessed = MutableLiveData<CharacterModel>()
+
+    // ViewModel data - Game score counter
     private val _scoreCount = MutableLiveData<Int>(0)
 
+    // ViewModel data - selected Game Mode (Practice/Timed)
     private val _gameMode = MutableLiveData<GameMode>()
+
+    // ViewModel data - state variable to enable/disable avatar card click handling
+    private val _shouldBlockClick = MutableLiveData<Boolean>(false)
 
     fun initGame(gameMode: GameMode) {
         if (isFirstRun()) {
