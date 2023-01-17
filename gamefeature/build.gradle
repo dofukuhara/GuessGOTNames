@@ -36,6 +36,7 @@ android {
 
 dependencies {
     // Custom Guess GOT Names modules
+    implementation project(":common")
     implementation project(":designsystem")
     implementation project(":network")
 
