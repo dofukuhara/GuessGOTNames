@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.fdtechcorp.android.guessgotnames.lib.common.arch.Either
+import br.com.fdtechcorp.android.guessgotnames.lib.common.arch.fold
 import br.com.fdtechcorp.android.guessgotnames.lib.common.timer.TimerCase
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.*
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.repository.CharactersRepository
@@ -153,18 +154,17 @@ class GuessNameViewModel(
                 repository.getCharacters()
             }
 
-            when (repositoryResult) {
-                is Either.FAILURE -> _gameState.value = GameState.FAILURE
-                is Either.SUCCESS -> {
-                    val charactersList = repositoryResult.data
-                    if (charactersList.isEmpty()) {
+            repositoryResult.fold(
+                failureHandler = {
+                    _gameState.value = GameState.FAILURE
+                }, successHandler = { listOfCharacterModel ->
+                    if (listOfCharacterModel.isEmpty()) {
                         _gameState.value = GameState.FAILURE
                     } else {
-                        _listOfCharacters.value = charactersList
+                        _listOfCharacters.value = listOfCharacterModel
                         restartGame()
                     }
-                }
-            }
+                })
         }
     }
 
