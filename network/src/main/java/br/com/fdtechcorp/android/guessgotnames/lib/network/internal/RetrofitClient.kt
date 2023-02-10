@@ -12,6 +12,7 @@ internal class RetrofitClient(private val networkConfiguration: NetworkConfigura
         Retrofit.Builder()
             .baseUrl(networkConfiguration.baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
+            .loggingInterceptor()
             .build()
     }
 
