@@ -8,7 +8,12 @@ class CharactersListVo : ArrayList<CharacterVo>()
 
 @Keep
 data class CharacterVo(
-    @SerializedName("firstName") val firstName: String,
-    @SerializedName("lastName") val lastName: String,
-    @SerializedName("imageUrl") val imageUrl: String
+    @SerializedName("id") val id: Long?,
+    @SerializedName("firstName") val firstName: String?,
+    @SerializedName("lastName") val lastName: String?,
+    @SerializedName("fullName") val fullName: String?,
+    @SerializedName("title") val title: String?,
+    @SerializedName("family") val family: String?,
+    @SerializedName("image") val image: String?,
+    @SerializedName("imageUrl") val imageUrl: String?
 )

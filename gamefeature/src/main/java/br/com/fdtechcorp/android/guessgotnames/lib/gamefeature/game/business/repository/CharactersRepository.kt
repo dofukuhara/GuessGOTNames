@@ -5,5 +5,5 @@ import br.com.fdtechcorp.android.guessgotnames.lib.common.exception.NoDataFound
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.CharacterModel
 
 interface CharactersRepository {
-    suspend fun getCharacters() : Either<NoDataFound, List<CharacterModel>>
+    suspend fun getCharacters() : Either<Throwable, List<CharacterModel>>
 }

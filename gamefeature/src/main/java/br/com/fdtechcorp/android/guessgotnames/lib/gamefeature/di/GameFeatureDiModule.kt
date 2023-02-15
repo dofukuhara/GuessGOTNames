@@ -1,5 +1,7 @@
 package br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.di
 
+import br.com.fdtechcorp.android.guessgotnames.lib.common.arch.Either
+import br.com.fdtechcorp.android.guessgotnames.lib.common.exception.ParseVoToModelException
 import br.com.fdtechcorp.android.guessgotnames.lib.common.network.ModelMapper
 import br.com.fdtechcorp.android.guessgotnames.lib.common.timer.TimerCase
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.CharacterModel
@@ -17,7 +19,7 @@ import org.koin.dsl.module
 
 val gameFeatureDiModule = module {
     // GuessName Repository
-    factory<ModelMapper<CharactersListVo, List<CharacterModel>>> { CharacterModelMapper() }
+    factory<ModelMapper<CharactersListVo, Either<ParseVoToModelException, List<CharacterModel>>>> { CharacterModelMapper() }
     factory { provideCharactersServiceApi(client = get()) }
     factory<CharactersRepository> { CharactersRemoteRepository(api = get(), mapper = get()) }
 

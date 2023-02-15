@@ -30,4 +30,5 @@ ext {
 
     // Testing Dependencies
     junit_version = "4.13.2"
+    mockk_version = "1.13.3"
 }

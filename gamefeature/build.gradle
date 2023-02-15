@@ -58,4 +58,6 @@ dependencies {
 
     // JUnit
     testImplementation "junit:junit:$junit_version"
+    // MockK
+    testImplementation "io.mockk:mockk:$mockk_version"
 }
