@@ -5,16 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import br.com.fdtechcorp.android.guessgotnames.lib.common.service.ImageLoader
 import br.com.fdtechcorp.android.guessgotnames.lib.designsystem.util.UnitConverter
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.R
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.databinding.CharacterCardBinding
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.CharacterModel
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.GuessState
-import com.squareup.picasso.Picasso
 
 class CharacterListAdapter(
     private var dataset: List<CharacterModel>,
-    private val clickListener: CharacterClickListener
+    private val clickListener: CharacterClickListener,
+    private val imageLoader: ImageLoader
     ) : RecyclerView.Adapter<CharacterListAdapter.CharacterListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterListViewHolder {
@@ -25,7 +26,7 @@ class CharacterListAdapter(
     }
 
     override fun onBindViewHolder(holder: CharacterListViewHolder, position: Int) {
-        holder.onBind(dataset[position], clickListener)
+        holder.onBind(dataset[position], clickListener, imageLoader)
     }
 
     override fun getItemCount(): Int = dataset.size
@@ -55,12 +56,8 @@ class CharacterListAdapter(
     }
 
     class CharacterListViewHolder(private val binding: CharacterCardBinding, private val cardSize: Int) : RecyclerView.ViewHolder(binding.root) {
-        fun onBind(characterModel: CharacterModel, clickListener: CharacterClickListener) {
-            Picasso.get()
-                .load(characterModel.imageUrl)
-                .resize(cardSize, cardSize)
-                .into(binding.characterCardImg)
-
+        fun onBind(characterModel: CharacterModel, clickListener: CharacterClickListener, imageLoader: ImageLoader) {
+            imageLoader.loadImage(imageUrl = characterModel.imageUrl, width = cardSize, height = cardSize, imageView = binding.characterCardImg)
 
             when (characterModel.guessState) {
                 GuessState.NOT_SET -> binding.characterCardImg.foreground = null

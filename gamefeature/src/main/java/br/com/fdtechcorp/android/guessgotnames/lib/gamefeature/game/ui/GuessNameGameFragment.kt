@@ -8,6 +8,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import br.com.fdtechcorp.android.guessgotnames.lib.common.service.ImageLoader
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.R
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.databinding.GuessNameGameFragmentBinding
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.adapter.CharacterClickListener
@@ -15,7 +16,8 @@ import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.adapter.Char
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.CharacterModel
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.GameState
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.viewmodel.GuessNameViewModel
-import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.module.gameFeatureModule
+import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.di.gameFeatureDiModule
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.loadKoinModules
 import org.koin.core.context.unloadKoinModules
@@ -26,6 +28,7 @@ class GuessNameGameFragment : Fragment(R.layout.guess_name_game_fragment) {
 
     private val navArgs: GuessNameGameFragmentArgs by navArgs()
     private val viewModel: GuessNameViewModel by viewModel()
+    private val imageLoader: ImageLoader by inject()
 
     private var adapter: CharacterListAdapter? = null
 
@@ -40,7 +43,7 @@ class GuessNameGameFragment : Fragment(R.layout.guess_name_game_fragment) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        loadKoinModules(gameFeatureModule)
+        loadKoinModules(gameFeatureDiModule)
 
         _binding = GuessNameGameFragmentBinding.inflate(inflater, container, false)
         return binding.root
@@ -50,7 +53,7 @@ class GuessNameGameFragment : Fragment(R.layout.guess_name_game_fragment) {
         super.onDestroyView()
 
         _binding = null
-        unloadKoinModules(gameFeatureModule)
+        unloadKoinModules(gameFeatureDiModule)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -111,7 +114,7 @@ class GuessNameGameFragment : Fragment(R.layout.guess_name_game_fragment) {
     private fun setupListOfCharsObserver() {
         viewModel.gameList.observe(viewLifecycleOwner) { listOfChars ->
             if (adapter == null) {
-                adapter = CharacterListAdapter(listOfChars, onCharClickListener)
+                adapter = CharacterListAdapter(listOfChars, onCharClickListener, imageLoader)
                 binding.guessNameGridRv.adapter = adapter
             } else {
                 adapter?.updateDataset(listOfChars)

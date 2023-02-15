@@ -4,14 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.fdtechcorp.android.guessgotnames.lib.common.arch.Either
 import br.com.fdtechcorp.android.guessgotnames.lib.common.arch.fold
 import br.com.fdtechcorp.android.guessgotnames.lib.common.timer.TimerCase
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.*
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.repository.CharactersRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -49,16 +47,16 @@ class GuessNameViewModel(
     private val _characterToBeGuessed = MutableLiveData<CharacterModel>()
 
     // ViewModel data - Game score counter
-    private val _scoreCount = MutableLiveData<Int>(0)
+    private val _scoreCount = MutableLiveData(0)
 
     // ViewModel data - selected Game Mode (Practice/Timed)
     private val _gameMode = MutableLiveData<GameMode>()
 
     // ViewModel data - state variable to enable/disable avatar card click handling
-    private val _shouldBlockClick = MutableLiveData<Boolean>(false)
+    private val _shouldBlockClick = MutableLiveData(false)
 
     // ViewModel data - handling one-time initialization of the Timer
-    private val _wasTimerInitialized = MutableLiveData<Boolean>(false)
+    private val _wasTimerInitialized = MutableLiveData(false)
 
     fun initGame(gameMode: GameMode) {
         if (isFirstRun()) {

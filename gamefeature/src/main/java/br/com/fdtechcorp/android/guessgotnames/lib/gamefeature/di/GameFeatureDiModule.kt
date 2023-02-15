@@ -1,4 +1,4 @@
-package br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.module
+package br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.di
 
 import br.com.fdtechcorp.android.guessgotnames.lib.common.network.ModelMapper
 import br.com.fdtechcorp.android.guessgotnames.lib.common.timer.TimerCase
@@ -15,7 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val gameFeatureModule = module {
+val gameFeatureDiModule = module {
     // GuessName Repository
     factory<ModelMapper<CharactersListVo, List<CharacterModel>>> { CharacterModelMapper() }
     factory { provideCharactersServiceApi(client = get()) }

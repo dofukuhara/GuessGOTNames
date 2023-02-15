@@ -33,4 +33,10 @@ android {
 dependencies {
     // Coroutines Library
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+
+    // Image Loader - Picasso
+    implementation "com.squareup.picasso:picasso:$picasso_version"
+
+    // DI - Koin
+    implementation "io.insert-koin:koin-android:$koin_android_version"
 }
