@@ -5,5 +5,5 @@ import retrofit2.http.GET
 
 interface CharactersServiceApi {
     @GET("Characters")
-    suspend fun fetchListOfCharacters(): CharactersListVo
+    suspend fun fetchListOfCharacters(): CharactersListVo?
 }

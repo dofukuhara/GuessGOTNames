@@ -17,6 +17,7 @@ class CharactersRemoteRepository(
     override suspend fun getCharacters(): Either<Throwable, List<CharacterModel>> {
         return try {
             val charactersListVo = api.fetchListOfCharacters()
+                ?: return NoDataFound("Failed to retrieve list of characters from remote repository").failure()
 
             return when (val mapperTransformation = mapper.transform(charactersListVo)) {
                 is Either.FAILURE -> mapperTransformation.exception.failure()
