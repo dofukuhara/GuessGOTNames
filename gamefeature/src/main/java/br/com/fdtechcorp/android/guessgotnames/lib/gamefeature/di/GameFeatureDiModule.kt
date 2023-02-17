@@ -25,13 +25,15 @@ val gameFeatureDiModule = module {
     factory<CharactersRepository> { CharactersRemoteRepository(api = get(), mapper = get()) }
 
     // GuessName ViewModel
-    viewModel { GuessNameViewModel(
-        backgroundDispatcher = Dispatchers.IO,
-        repository = get(),
-        timer = TimerCase(backgroundDispatcher = Dispatchers.IO),
-        gameConfig = GameConfig(numberOfProfiles = 6, timerForTimedModeInSeconds = 120),
-        randomCharacterGenerator = RandomCharacterGenerator()
-    ) }
+    viewModel {
+        GuessNameViewModel(
+            backgroundDispatcher = Dispatchers.IO,
+            repository = get(),
+            timer = TimerCase(backgroundDispatcher = Dispatchers.IO),
+            gameConfig = GameConfig(numberOfProfiles = 6, timerForTimedModeInSeconds = 120),
+            randomCharacterGenerator = RandomCharacterGenerator()
+        )
+    }
 }
 
-private fun provideCharactersServiceApi(client: RestClient) : CharactersServiceApi = client.getApi(CharactersServiceApi::class.java)
+private fun provideCharactersServiceApi(client: RestClient): CharactersServiceApi = client.getApi(CharactersServiceApi::class.java)

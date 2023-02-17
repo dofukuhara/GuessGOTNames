@@ -4,6 +4,7 @@ import br.com.fdtechcorp.android.guessgotnames.lib.common.arch.Either
 import br.com.fdtechcorp.android.guessgotnames.lib.common.exception.NoDataFound
 import br.com.fdtechcorp.android.guessgotnames.lib.common.exception.ParseVoToModelException
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.CharacterModelMapper
+import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.CharacterModelMapperTestHelper as ModelMapperTestHelper
 import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.unmockkAll
@@ -15,14 +16,13 @@ import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.CharacterModelMapperTestHelper as ModelMapperTestHelper
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class CharactersRemoteRepositoryTest {
 
     private lateinit var repository: CharactersRepository
 
-    private val apiMock : CharactersServiceApi = mockk(relaxed = true)
+    private val apiMock: CharactersServiceApi = mockk(relaxed = true)
 
     @Before
     fun setUp() {
@@ -49,7 +49,9 @@ class CharactersRemoteRepositoryTest {
         )
         assertThat(
             "When an empty Vo is returned, then A NoDataFound exception message must state what happened",
-            (response as? Either.FAILURE)?.exception?.message, `is`("Failed to retrieve list of characters from remote repository"))
+            (response as? Either.FAILURE)?.exception?.message,
+            `is`("Failed to retrieve list of characters from remote repository")
+        )
     }
 
     @Test
@@ -63,7 +65,8 @@ class CharactersRemoteRepositoryTest {
         // Then
         assertThat(
             "When a complete single item Vo is returned, then a single list model item should be generated",
-            (response as? Either.SUCCESS)?.data?.size, `is`(1)
+            (response as? Either.SUCCESS)?.data?.size,
+            `is`(1)
         )
     }
 
@@ -83,7 +86,8 @@ class CharactersRemoteRepositoryTest {
         assertThat(
             "When ModelMapper returns a ParseVoToModelException exception, ensure that the message will be passed forward",
             (response as? Either.FAILURE)?.exception?.message,
-            `is`("Failed to parse CharactersListVo into CharacterModel [Missing firstName field]"))
+            `is`("Failed to parse CharactersListVo into CharacterModel [Missing firstName field]")
+        )
     }
 
     @Test
@@ -102,6 +106,7 @@ class CharactersRemoteRepositoryTest {
         assertThat(
             "When API produces an unknown error, generate a NoDataFound with the proper error message",
             (response as? Either.FAILURE)?.exception?.message,
-            `is`("Failed to retrieve list of characters from remote repository"))
+            `is`("Failed to retrieve list of characters from remote repository")
+        )
     }
 }

@@ -7,8 +7,10 @@ import org.koin.dsl.module
 private const val BASE_URL = "https://thronesapi.com/api/v2/"
 
 val appConfigDiModule = module {
-    factory { NetworkConfiguration(
-        baseUrl = BASE_URL,
-        isDebuggable = BuildConfig.DEBUG
-    ) }
+    factory {
+        NetworkConfiguration(
+            baseUrl = BASE_URL,
+            isDebuggable = BuildConfig.DEBUG
+        )
+    }
 }

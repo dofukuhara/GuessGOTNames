@@ -32,7 +32,8 @@ class RandomCharacterGeneratorTest {
         // Then
         assertNull(
             "Given an empty list, then randomizeAndPickOneCharacter must return null",
-            randomResult)
+            randomResult
+        )
     }
 
     @Test
@@ -47,11 +48,13 @@ class RandomCharacterGeneratorTest {
         // Then
         assertThat(
             "In case that the provided list has less values then game profile settings, then return all elements from the provided list",
-            randomResult?.randomList?.size, `is`(1)
+            randomResult?.randomList?.size,
+            `is`(1)
         )
         assertThat(
             "In case of a single item, return this item as the character to be guessed",
-            randomResult?.characterToBeGuessed, `is`(model[0])
+            randomResult?.characterToBeGuessed,
+            `is`(model[0])
         )
     }
 
@@ -67,11 +70,13 @@ class RandomCharacterGeneratorTest {
         // Then
         assertThat(
             "The provided list contains more than six elements.",
-            model.size, `is`(10)
+            model.size,
+            `is`(10)
         )
         assertThat(
             "But the result randomized list size must be as same as per game configuration setting.",
-            randomResult?.randomList?.size, `is`(6)
+            randomResult?.randomList?.size,
+            `is`(6)
         )
     }
 }

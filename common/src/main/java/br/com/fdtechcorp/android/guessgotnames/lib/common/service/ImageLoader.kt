@@ -12,4 +12,3 @@ internal class PicassoImageLoader : ImageLoader {
         Picasso.get().load(imageUrl).resize(width, height).into(imageView)
     }
 }
-

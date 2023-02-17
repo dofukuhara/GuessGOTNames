@@ -3,13 +3,13 @@ package br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.mo
 import br.com.fdtechcorp.android.guessgotnames.lib.common.arch.Either
 import br.com.fdtechcorp.android.guessgotnames.lib.common.exception.ParseVoToModelException
 import br.com.fdtechcorp.android.guessgotnames.lib.common.network.ModelMapper
+import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.CharacterModelMapperTestHelper as TestHelper
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.CharacterModelMapperTestHelper as TestHelper
 
 class CharacterModelMapperTest {
 
@@ -107,7 +107,8 @@ class CharacterModelMapperTest {
         // Then
         assertTrue(
             "When firstName field is missing from Vo, then mapper will throw a ParseVoToModelException",
-            (model as? Either.FAILURE)?.exception is ParseVoToModelException)
+            (model as? Either.FAILURE)?.exception is ParseVoToModelException
+        )
         assertThat(
             "When firstName field is missing from Vo, then ParseVoToModelException message must inform the missing field",
             (model as? Either.FAILURE)?.exception?.message,
@@ -126,7 +127,8 @@ class CharacterModelMapperTest {
         // Then
         assertTrue(
             "When firstName field is missing from Vo, then mapper will throw a ParseVoToModelException",
-            (model as? Either.FAILURE)?.exception is ParseVoToModelException)
+            (model as? Either.FAILURE)?.exception is ParseVoToModelException
+        )
         assertThat(
             "When firstName field is missing from Vo, then ParseVoToModelException message must inform the missing field",
             (model as? Either.FAILURE)?.exception?.message,
@@ -145,7 +147,8 @@ class CharacterModelMapperTest {
         // Then
         assertTrue(
             "When firstName field is missing from Vo, then mapper will throw a ParseVoToModelException",
-            (model as? Either.FAILURE)?.exception is ParseVoToModelException)
+            (model as? Either.FAILURE)?.exception is ParseVoToModelException
+        )
         assertThat(
             "When firstName field is missing from Vo, then ParseVoToModelException message must inform the missing field",
             (model as? Either.FAILURE)?.exception?.message,

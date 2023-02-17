@@ -1,9 +1,9 @@
 package br.com.fdtechcorp.android.guessgotnames
 
 import android.app.Application
+import br.com.fdtechcorp.android.guessgotnames.di.appConfigDiModule
 import br.com.fdtechcorp.android.guessgotnames.lib.common.di.commonDiModule
 import br.com.fdtechcorp.android.guessgotnames.lib.network.di.networkDiModule
-import br.com.fdtechcorp.android.guessgotnames.di.appConfigDiModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

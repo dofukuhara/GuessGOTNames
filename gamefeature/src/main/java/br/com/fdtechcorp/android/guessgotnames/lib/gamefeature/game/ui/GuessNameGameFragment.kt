@@ -11,12 +11,12 @@ import androidx.navigation.fragment.navArgs
 import br.com.fdtechcorp.android.guessgotnames.lib.common.service.ImageLoader
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.R
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.databinding.GuessNameGameFragmentBinding
+import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.di.gameFeatureDiModule
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.adapter.CharacterClickListener
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.adapter.CharacterListAdapter
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.CharacterModel
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.GameState
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.viewmodel.GuessNameViewModel
-import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.di.gameFeatureDiModule
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.loadKoinModules
@@ -85,12 +85,12 @@ class GuessNameGameFragment : Fragment(R.layout.guess_name_game_fragment) {
     private fun setupGameStateObserver() {
         viewModel.gameState.observe(viewLifecycleOwner) { gameState ->
             when (gameState) {
-                GameState.SETUP     -> Unit
+                GameState.SETUP -> Unit
                 GameState.DATAFETCH -> Unit
-                GameState.FAILURE   -> makeErrorContainerVisible()
-                GameState.STARTED   -> makeGameContentVisible()
-                GameState.WON       -> Unit
-                is GameState.LOOSE  -> displayAlert(gameState.score)
+                GameState.FAILURE -> makeErrorContainerVisible()
+                GameState.STARTED -> makeGameContentVisible()
+                GameState.WON -> Unit
+                is GameState.LOOSE -> displayAlert(gameState.score)
             }
         }
     }

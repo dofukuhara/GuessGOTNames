@@ -161,14 +161,16 @@ class GuessNameViewModel(
             repositoryResult.fold(
                 failureHandler = {
                     _gameState.value = GameState.FAILURE
-                }, successHandler = { listOfCharacterModel ->
+                },
+                successHandler = { listOfCharacterModel ->
                     if (listOfCharacterModel.isEmpty()) {
                         _gameState.value = GameState.FAILURE
                     } else {
                         _listOfCharacters.value = listOfCharacterModel
                         restartGame()
                     }
-                })
+                }
+            )
         }
     }
 }

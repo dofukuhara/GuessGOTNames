@@ -34,7 +34,6 @@ class TimerFlow(private val backgroundDispatcher: CoroutineDispatcher) {
             .transform { remainingSeconds: Int ->
                 emit(TimerState(remainingSeconds, totalSeconds))
             }
-
 }
 
 data class TimerState(val secondsRemaining: Int? = null, val totalSeconds: Int = 60) {

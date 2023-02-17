@@ -4,7 +4,7 @@ import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.mod
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.GameConfig
 
 class RandomCharacterGenerator {
-    fun randomizeAndPickOneCharacter(gameConfig: GameConfig, list: List<CharacterModel>?) : RandomCharacterGeneratorResult? {
+    fun randomizeAndPickOneCharacter(gameConfig: GameConfig, list: List<CharacterModel>?): RandomCharacterGeneratorResult? {
         val charactersList = if (list.isNullOrEmpty()) return null else list
         val charactersListSize = charactersList.size
         val minCharsToDisplay = minOf(gameConfig.numberOfProfiles, charactersListSize)

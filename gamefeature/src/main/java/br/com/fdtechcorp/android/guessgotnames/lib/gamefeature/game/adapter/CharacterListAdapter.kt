@@ -16,7 +16,7 @@ class CharacterListAdapter(
     private var dataset: List<CharacterModel>,
     private val clickListener: CharacterClickListener,
     private val imageLoader: ImageLoader
-    ) : RecyclerView.Adapter<CharacterListAdapter.CharacterListViewHolder>() {
+) : RecyclerView.Adapter<CharacterListAdapter.CharacterListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterListViewHolder {
         val binding = CharacterCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)

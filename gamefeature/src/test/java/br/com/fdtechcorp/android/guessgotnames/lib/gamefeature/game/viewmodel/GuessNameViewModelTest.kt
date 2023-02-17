@@ -10,6 +10,7 @@ import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.R
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.logic.RandomCharacterGenerator
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.logic.RandomCharacterGeneratorResult
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.*
+import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.CharacterModelMapperTestHelper as ModelMapperTestHelper
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.repository.CharactersRepository
 import br.com.fdtechcorp.android.guessgotnames.lib.testutils.MainCoroutinesRule
 import io.mockk.*
@@ -22,7 +23,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.CharacterModelMapperTestHelper as ModelMapperTestHelper
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class GuessNameViewModelTest {
@@ -69,7 +69,8 @@ class GuessNameViewModelTest {
         // Then
         assertThat(
             "When initializing game in Practice Mode, the R.string.gamefeature_practice_mode_label string resource must be passed to the view",
-            viewModel.toolbarConfig.value?.first, `is`(R.string.gamefeature_practice_mode_label)
+            viewModel.toolbarConfig.value?.first,
+            `is`(R.string.gamefeature_practice_mode_label)
         )
     }
 
@@ -86,7 +87,8 @@ class GuessNameViewModelTest {
         // Then
         assertThat(
             "When initializing game in Practice Mode, timer icon in toolbar must not be visible",
-            viewModel.toolbarConfig.value?.second, `is`(false)
+            viewModel.toolbarConfig.value?.second,
+            `is`(false)
         )
     }
 
@@ -103,7 +105,8 @@ class GuessNameViewModelTest {
         // Then
         assertThat(
             "When initializing game in Timed Mode, the R.string.gamefeature_timed_mode_label string resource must be passed to the view",
-            viewModel.toolbarConfig.value?.first, `is`(R.string.gamefeature_timed_mode_label)
+            viewModel.toolbarConfig.value?.first,
+            `is`(R.string.gamefeature_timed_mode_label)
         )
     }
 
@@ -120,7 +123,8 @@ class GuessNameViewModelTest {
         // Then
         assertThat(
             "When initializing game in Timed Mode, timer icon in toolbar must be visible",
-            viewModel.toolbarConfig.value?.second, `is`(true)
+            viewModel.toolbarConfig.value?.second,
+            `is`(true)
         )
     }
 
@@ -138,7 +142,9 @@ class GuessNameViewModelTest {
         // Then
         assertThat(
             "When timed mode game is initiated, timer countdown must be at 100%",
-            viewModel.timerPercentage.value, `is`(100))
+            viewModel.timerPercentage.value,
+            `is`(100)
+        )
         advanceUntilIdle()
     }
 
@@ -157,7 +163,9 @@ class GuessNameViewModelTest {
         // Then
         assertThat(
             "After passing 60 seconds out of 120, timer countdown must be at 50%",
-            viewModel.timerPercentage.value, `is`(50))
+            viewModel.timerPercentage.value,
+            `is`(50)
+        )
         advanceUntilIdle()
     }
 
@@ -176,7 +184,9 @@ class GuessNameViewModelTest {
         // Then
         assertThat(
             "After passing 119 seconds out of 120, timer countdown must be at 1%",
-            viewModel.timerPercentage.value, `is`(1))
+            viewModel.timerPercentage.value,
+            `is`(1)
+        )
         advanceUntilIdle()
     }
 
@@ -195,7 +205,9 @@ class GuessNameViewModelTest {
         // Then
         assertThat(
             "After passing 120 seconds out of 120, timer countdown must be at 0%",
-            viewModel.timerPercentage.value, `is`(0))
+            viewModel.timerPercentage.value,
+            `is`(0)
+        )
         advanceUntilIdle()
     }
 
@@ -214,7 +226,9 @@ class GuessNameViewModelTest {
         val finishedGameState: GameState? = viewModel.gameState.value
         assertThat(
             "After the timer is finished and no guess was made, then finish the game with score zero",
-            (finishedGameState as? GameState.LOOSE)?.score, `is`(0))
+            (finishedGameState as? GameState.LOOSE)?.score,
+            `is`(0)
+        )
     }
 
     @Test
@@ -222,7 +236,7 @@ class GuessNameViewModelTest {
         // Given
         val gameModeInTimed = GameMode.TIMED_MODE
         val model = CharacterModelMapper().transform(ModelMapperTestHelper.getCompleteTenItemsResponse())
-        val gameList = (model as Either.SUCCESS).data.mapIndexedNotNull { index, entry -> if (index > 5)  null else entry }
+        val gameList = (model as Either.SUCCESS).data.mapIndexedNotNull { index, entry -> if (index > 5) null else entry }
         val characterToBeGuessed = model.data[0]
 
         coEvery { repositoryMock.getCharacters() } returns model
@@ -245,7 +259,9 @@ class GuessNameViewModelTest {
         val finishedGameState: GameState? = viewModel.gameState.value
         assertThat(
             "After the timer is finished and user guess correctly two times, then finish the game with score two",
-            (finishedGameState as? GameState.LOOSE)?.score, `is`(2))
+            (finishedGameState as? GameState.LOOSE)?.score,
+            `is`(2)
+        )
     }
 
     @Test
@@ -260,7 +276,8 @@ class GuessNameViewModelTest {
         // Then
         assertThat(
             "Given an exception thrown by repository, notify this error to the view via GameState.FAILURE state",
-            viewModel.gameState.value, `is`(GameState.FAILURE)
+            viewModel.gameState.value,
+            `is`(GameState.FAILURE)
         )
     }
 
@@ -276,7 +293,8 @@ class GuessNameViewModelTest {
         // Then
         assertThat(
             "Given an empty list of characters, notify this error to the view via GameState.FAILURE state",
-            viewModel.gameState.value, `is`(GameState.FAILURE)
+            viewModel.gameState.value,
+            `is`(GameState.FAILURE)
         )
     }
 
@@ -293,7 +311,8 @@ class GuessNameViewModelTest {
         // Then
         assertThat(
             "Given any valid response of characters, notify view to draw the game content via GameState.STARTED state",
-            viewModel.gameState.value, `is`(GameState.STARTED)
+            viewModel.gameState.value,
+            `is`(GameState.STARTED)
         )
     }
 
@@ -313,7 +332,8 @@ class GuessNameViewModelTest {
         // Then
         assertThat(
             "Given a single item, then show the name of this character in the view",
-            viewModel.characterNameToBeGuessed.value, `is`("Daenerys Targaryen")
+            viewModel.characterNameToBeGuessed.value,
+            `is`("Daenerys Targaryen")
         )
     }
 
@@ -334,8 +354,14 @@ class GuessNameViewModelTest {
         assertThat(
             "As the selection of the character is random, it can be one of those 10 entries",
             viewModel.characterNameToBeGuessed.value,
-            anyOf(`is`("Daenerys Targaryen"), `is`("Samwell Tarly"), `is`("Jon Snow"),
-                `is`("Arya Stark"), `is`("Sansa Stark"), `is`("Brandon Stark"))
+            anyOf(
+                `is`("Daenerys Targaryen"),
+                `is`("Samwell Tarly"),
+                `is`("Jon Snow"),
+                `is`("Arya Stark"),
+                `is`("Sansa Stark"),
+                `is`("Brandon Stark")
+            )
         )
     }
 
@@ -355,7 +381,8 @@ class GuessNameViewModelTest {
         // Then
         assertThat(
             "Given a repository result of 10 characters, viewModel must filter, randomize and return a list of 6 entries to the view",
-            viewModel.gameList.value?.size, `is`(6)
+            viewModel.gameList.value?.size,
+            `is`(6)
         )
     }
 
@@ -363,7 +390,7 @@ class GuessNameViewModelTest {
     fun `given A Game Already Set, When User Tap On The Correct Avatar, Then Its GuessState Value Must Be Changed To Right`() = runTest {
         // Given
         val model = CharacterModelMapper().transform(ModelMapperTestHelper.getCompleteTenItemsResponse())
-        val gameList = (model as Either.SUCCESS).data.mapIndexedNotNull { index, entry -> if (index > 5)  null else entry }
+        val gameList = (model as Either.SUCCESS).data.mapIndexedNotNull { index, entry -> if (index > 5) null else entry }
         val characterToBeGuessed = model.data[0]
 
         coEvery { repositoryMock.getCharacters() } returns model
@@ -376,7 +403,8 @@ class GuessNameViewModelTest {
 
         assertThat(
             "Ensure that before user tap any avatar the 'to-be-guessed' character GuessState is set as NOT_SET",
-            viewModel.gameList.value?.get(0)?.guessState, `is`(GuessState.NOT_SET)
+            viewModel.gameList.value?.get(0)?.guessState,
+            `is`(GuessState.NOT_SET)
         )
 
         // When
@@ -385,7 +413,8 @@ class GuessNameViewModelTest {
         // Then
         assertThat(
             "When user tap in the correct character avatar, its GuessState attribute must be changed to RIGHT",
-            viewModel.gameList.value?.get(0)?.guessState, `is`(GuessState.RIGHT)
+            viewModel.gameList.value?.get(0)?.guessState,
+            `is`(GuessState.RIGHT)
         )
     }
 
@@ -393,7 +422,7 @@ class GuessNameViewModelTest {
     fun `given A Game Already Set, When User Tap On The Wrong Avatar, Then Its GuessState Value Must Be Changed To Wrong`() = runTest {
         // Given
         val model = CharacterModelMapper().transform(ModelMapperTestHelper.getCompleteTenItemsResponse())
-        val gameList = (model as Either.SUCCESS).data.mapIndexedNotNull { index, entry -> if (index > 5)  null else entry }
+        val gameList = (model as Either.SUCCESS).data.mapIndexedNotNull { index, entry -> if (index > 5) null else entry }
         val characterToBeGuessed = model.data[0]
         val wrongCharacter = model.data[1]
 
@@ -407,11 +436,13 @@ class GuessNameViewModelTest {
 
         assertThat(
             "Ensure that before user tap any avatar the 'to-be-guessed' character GuessState is set as NOT_SET",
-            viewModel.gameList.value?.get(0)?.guessState, `is`(GuessState.NOT_SET)
+            viewModel.gameList.value?.get(0)?.guessState,
+            `is`(GuessState.NOT_SET)
         )
         assertThat(
             "Ensure that before user tap any avatar the 'wrong' character GuessState is set as NOT_SET",
-            viewModel.gameList.value?.get(1)?.guessState, `is`(GuessState.NOT_SET)
+            viewModel.gameList.value?.get(1)?.guessState,
+            `is`(GuessState.NOT_SET)
         )
 
         // When
@@ -420,11 +451,13 @@ class GuessNameViewModelTest {
         // Then
         assertThat(
             "As the user didn't tap the correct avatar, it must remain as NOT_SET",
-            viewModel.gameList.value?.get(0)?.guessState, `is`(GuessState.NOT_SET)
+            viewModel.gameList.value?.get(0)?.guessState,
+            `is`(GuessState.NOT_SET)
         )
         assertThat(
             "When user tap in the wrong character avatar, its GuessState attribute must be changed to WRONG",
-            viewModel.gameList.value?.get(1)?.guessState, `is`(GuessState.WRONG)
+            viewModel.gameList.value?.get(1)?.guessState,
+            `is`(GuessState.WRONG)
         )
     }
 }

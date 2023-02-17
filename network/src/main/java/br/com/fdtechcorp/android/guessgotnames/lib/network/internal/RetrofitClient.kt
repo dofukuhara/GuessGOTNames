@@ -16,7 +16,7 @@ internal class RetrofitClient(private val networkConfiguration: NetworkConfigura
             .build()
     }
 
-    private fun Retrofit.Builder.loggingInterceptor() : Retrofit.Builder {
+    private fun Retrofit.Builder.loggingInterceptor(): Retrofit.Builder {
         return if (networkConfiguration.isDebuggable) {
             val clientConfig = OkHttpClient.Builder().addInterceptor(
                 HttpLoggingInterceptor().apply {
