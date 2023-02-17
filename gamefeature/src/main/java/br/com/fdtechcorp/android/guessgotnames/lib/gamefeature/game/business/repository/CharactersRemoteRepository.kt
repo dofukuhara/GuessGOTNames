@@ -2,7 +2,6 @@ package br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.re
 
 import br.com.fdtechcorp.android.guessgotnames.lib.common.arch.Either
 import br.com.fdtechcorp.android.guessgotnames.lib.common.arch.failure
-import br.com.fdtechcorp.android.guessgotnames.lib.common.arch.fold
 import br.com.fdtechcorp.android.guessgotnames.lib.common.arch.success
 import br.com.fdtechcorp.android.guessgotnames.lib.common.exception.NoDataFound
 import br.com.fdtechcorp.android.guessgotnames.lib.common.exception.ParseVoToModelException

@@ -4,6 +4,7 @@ import br.com.fdtechcorp.android.guessgotnames.lib.common.arch.Either
 import br.com.fdtechcorp.android.guessgotnames.lib.common.exception.ParseVoToModelException
 import br.com.fdtechcorp.android.guessgotnames.lib.common.network.ModelMapper
 import br.com.fdtechcorp.android.guessgotnames.lib.common.timer.TimerCase
+import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.logic.RandomCharacterGenerator
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.CharacterModel
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.CharacterModelMapper
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.CharactersListVo
@@ -27,8 +28,9 @@ val gameFeatureDiModule = module {
     viewModel { GuessNameViewModel(
         backgroundDispatcher = Dispatchers.IO,
         repository = get(),
-        timer = TimerCase(),
-        gameConfig = GameConfig(numberOfProfiles = 6, timerForTimedModeInSeconds = 120)
+        timer = TimerCase(backgroundDispatcher = Dispatchers.IO),
+        gameConfig = GameConfig(numberOfProfiles = 6, timerForTimedModeInSeconds = 120),
+        randomCharacterGenerator = RandomCharacterGenerator()
     ) }
 }
 

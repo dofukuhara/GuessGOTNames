@@ -39,6 +39,7 @@ dependencies {
     implementation project(":common")
     implementation project(":designsystem")
     implementation project(":network")
+    testImplementation project(":testutils")
 
     // View Components
     implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
@@ -62,4 +63,6 @@ dependencies {
     testImplementation "io.mockk:mockk:$mockk_version"
     // Coroutines Test
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
+    // AndroidX Arch Core Testing
+    testImplementation "androidx.arch.core:core-testing:$core_testing_version"
 }

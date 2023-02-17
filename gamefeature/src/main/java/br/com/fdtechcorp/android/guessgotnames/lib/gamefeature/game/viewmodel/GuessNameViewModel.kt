@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.fdtechcorp.android.guessgotnames.lib.common.arch.fold
 import br.com.fdtechcorp.android.guessgotnames.lib.common.timer.TimerCase
+import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.logic.RandomCharacterGenerator
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.model.*
 import br.com.fdtechcorp.android.guessgotnames.lib.gamefeature.game.business.repository.CharactersRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -17,7 +18,8 @@ class GuessNameViewModel(
     private val backgroundDispatcher: CoroutineDispatcher,
     private val repository: CharactersRepository,
     private val timer: TimerCase,
-    private val gameConfig: GameConfig
+    private val gameConfig: GameConfig,
+    private val randomCharacterGenerator: RandomCharacterGenerator
 ) : ViewModel() {
 
     // UI - Toolbar Configuration
@@ -119,14 +121,18 @@ class GuessNameViewModel(
         _gameState.value = GameState.STARTED
         _shouldBlockClick.value = false
 
-        val gameList = generateRandomListForGame()
-        val profileToBeGuessed = generatedRandomProfileForGame(gameList)
+        val randomizeResult = randomCharacterGenerator.randomizeAndPickOneCharacter(gameConfig, _listOfCharacters.value)
+        if (randomizeResult == null) {
+            _gameState.value = GameState.FAILURE
+        } else {
+            val profileToBeGuessed = randomizeResult.characterToBeGuessed
 
-        _gameList.value = gameList
-        _characterToBeGuessed.value = profileToBeGuessed
-        _characterNameToBeGuessed.value = "${profileToBeGuessed.firstName} ${profileToBeGuessed.lastName}"
+            _gameList.value = randomizeResult.randomList
+            _characterToBeGuessed.value = profileToBeGuessed
+            _characterNameToBeGuessed.value = "${profileToBeGuessed.firstName} ${profileToBeGuessed.lastName}"
 
-        initTimerForTimedMode()
+            initTimerForTimedMode()
+        }
     }
 
     private fun initTimerForTimedMode() {
@@ -164,24 +170,5 @@ class GuessNameViewModel(
                     }
                 })
         }
-    }
-
-    private fun generateRandomListForGame(): List<CharacterModel> {
-        val charactersList = _listOfCharacters.value ?: listOf()
-        val charactersListSize = charactersList.size
-        val minCharsToDisplay = minOf(gameConfig.numberOfProfiles, charactersListSize)
-
-        val characterIndexesSet = mutableSetOf<Int>()
-        while (characterIndexesSet.size < minCharsToDisplay) {
-            characterIndexesSet.add((0 until charactersListSize).random())
-        }
-
-        return characterIndexesSet.map { index ->
-            charactersList[index].copy() // Make a copy of the Char Item, so that we don't modify the original one
-        }
-    }
-
-    private fun generatedRandomProfileForGame(gameList: List<CharacterModel>): CharacterModel {
-        return gameList.random()
     }
 }

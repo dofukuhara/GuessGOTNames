@@ -1,17 +1,14 @@
 package br.com.fdtechcorp.android.guessgotnames.lib.common.timer
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 
-class TimerCase {
-    val timerFlow: TimerFlow = TimerFlow()
+class TimerCase(backgroundDispatcher: CoroutineDispatcher) {
+    val timerFlow: TimerFlow = TimerFlow(backgroundDispatcher)
     val timerStateFlow: StateFlow<TimerState> = timerFlow.timerStateFlow
 }
 
-class TimerFlow {
+class TimerFlow(private val backgroundDispatcher: CoroutineDispatcher) {
     private var _timerStateFlow = MutableStateFlow(TimerState())
     val timerStateFlow: StateFlow<TimerState> = _timerStateFlow
 
@@ -19,7 +16,7 @@ class TimerFlow {
 
     fun toggleTime(totalSeconds: Int, timerScope: CoroutineScope) {
         job = if (job == null) {
-            timerScope.launch {
+            timerScope.launch(backgroundDispatcher) {
                 initTimer(totalSeconds)
                     .onCompletion { _timerStateFlow.emit(TimerState(0, totalSeconds)) }
                     .collect { _timerStateFlow.emit(it) }
